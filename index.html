@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrackerDo - Coming Soon</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         :root {
             --primary: #4361ee;
             --secondary: #3f37c9;
             --accent: #4cc9f0;
+            --neon: #00f7ff;
             --light: #f8f9fa;
-            --dark: #212529;
+            --dark: #0a0e17;
+            --gradient: linear-gradient(135deg, var(--primary), var(--accent));
         }
         
         * {
@@ -21,56 +24,128 @@
         }
         
         body {
-            background-color: var(--light);
-            color: var(--dark);
+            background-color: var(--dark);
+            color: var(--light);
             line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(67, 97, 238, 0.1) 0%, transparent 30%),
+                radial-gradient(circle at 90% 80%, rgba(76, 201, 240, 0.1) 0%, transparent 30%);
         }
         
         .container {
+            width: 90%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 15px;
         }
         
         header {
             padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background-color: rgba(10, 14, 23, 0.8);
+        }
+        
+        header.scrolled {
+            box-shadow: 0 5px 20px rgba(0, 247, 255, 0.1);
         }
         
         .logo {
             font-size: 2rem;
             font-weight: 700;
-            color: var(--primary);
-        }
-        
-        .logo span {
-            color: var(--secondary);
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(76, 201, 240, 0.3);
         }
         
         .hero {
-            height: 80vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 20px;
+            padding: 100px 20px 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(76, 201, 240, 0.05) 0%, transparent 70%);
+            top: -25%;
+            left: -25%;
+            z-index: -1;
+            animation: pulse 15s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+        
+        .glitch-wrapper {
+            position: relative;
+            margin-bottom: 30px;
         }
         
         h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            color: var(--primary);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 5px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        h1::after {
+            content: 'Track, Organize, Deliver';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px var(--neon);
+            animation: glitch 5s infinite;
+            opacity: 0;
+        }
+        
+        @keyframes glitch {
+            0%, 95%, 100% { opacity: 0; transform: translateX(0); }
+            96% { opacity: 1; transform: translateX(2px); }
+            97% { opacity: 1; transform: translateX(-2px); }
+            98% { opacity: 1; transform: translateX(1px); }
+            99% { opacity: 1; transform: translateX(-1px); }
         }
         
         .hero p {
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 2vw, 1.2rem);
             max-width: 700px;
-            margin-bottom: 30px;
+            margin: 0 auto 30px;
+            color: rgba(248, 249, 250, 0.8);
         }
         
         .cta-button {
             display: inline-block;
-            background-color: var(--primary);
+            background: var(--gradient);
             color: white;
             padding: 12px 30px;
             border-radius: 30px;
@@ -78,57 +153,127 @@
             font-weight: 600;
             margin-top: 20px;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 0 15px rgba(76, 201, 240, 0.5);
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            z-index: -1;
+            transition: opacity 0.3s ease;
+            opacity: 0;
         }
         
         .cta-button:hover {
-            background-color: var(--secondary);
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 20px rgba(76, 201, 240, 0.5);
+        }
+        
+        .cta-button:hover::before {
+            opacity: 1;
         }
         
         .features {
-            padding: 60px 0;
-            background-color: white;
+            padding: 80px 0;
+            position: relative;
         }
         
         .section-title {
             text-align: center;
             margin-bottom: 50px;
-            font-size: 2.2rem;
-            color: var(--primary);
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--gradient);
         }
         
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
         }
         
         .feature-box {
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 15px;
+            background-color: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(76, 201, 240, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
         
         .feature-box:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 0 15px rgba(76, 201, 240, 0.3);
+            border-color: rgba(76, 201, 240, 0.2);
+        }
+        
+        .feature-box:hover::before {
+            opacity: 1;
         }
         
         .feature-box h3 {
             font-size: 1.4rem;
             margin-bottom: 15px;
-            color: var(--primary);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-box h3 i {
+            margin-right: 10px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
         
         .feature-box p {
-            color: #666;
+            color: rgba(248, 249, 250, 0.7);
         }
         
         .plans {
-            padding: 60px 0;
-            background-color: #f5f7fa;
+            padding: 80px 0;
+            position: relative;
+            background-color: rgba(10, 14, 23, 0.8);
         }
         
         .plans-container {
@@ -136,31 +281,55 @@
             justify-content: center;
             gap: 30px;
             flex-wrap: wrap;
+            perspective: 1000px;
         }
         
         .plan-box {
-            background-color: white;
-            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             width: 300px;
             transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transform-style: preserve-3d;
         }
         
         .plan-box:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transform: scale(1.05) rotateY(5deg);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 0 15px rgba(76, 201, 240, 0.3);
+            border-color: rgba(76, 201, 240, 0.2);
         }
         
         .plan-header {
-            background-color: var(--primary);
+            background: var(--gradient);
             color: white;
             padding: 20px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
         
         .plan-header.free {
-            background-color: var(--accent);
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+        }
+        
+        .plan-header::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+            top: -50%;
+            left: -50%;
+            transition: all 0.5s ease;
+        }
+        
+        .plan-box:hover .plan-header::before {
+            transform: rotate(45deg) translateX(100%);
         }
         
         .plan-content {
@@ -173,16 +342,17 @@
         }
         
         .plan-features li {
-            padding: 5px 0;
+            padding: 8px 0;
             position: relative;
-            padding-left: 25px;
+            padding-left: 30px;
+            color: rgba(248, 249, 250, 0.7);
         }
         
         .plan-features li::before {
             content: "✓";
             position: absolute;
             left: 0;
-            color: var(--primary);
+            color: var(--accent);
             font-weight: bold;
         }
         
@@ -190,68 +360,61 @@
             font-size: 2rem;
             font-weight: 700;
             margin: 20px 0;
-            color: var(--dark);
-        }
-        
-        .newsletter {
-            padding: 60px 0;
-            text-align: center;
-        }
-        
-        .form-control {
-            display: flex;
-            justify-content: center;
-            margin-top: 30px;
-        }
-        
-        .form-control input {
-            padding: 12px 20px;
-            width: 300px;
-            border: 1px solid #ddd;
-            border-radius: 30px 0 0 30px;
-            outline: none;
-        }
-        
-        .form-control button {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 0 25px;
-            border-radius: 0 30px 30px 0;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        
-        footer {
-            background-color: var(--dark);
-            color: white;
-            text-align: center;
-            padding: 30px 0;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
         
         .countdown {
             display: flex;
             justify-content: center;
             margin: 30px 0;
+            perspective: 1000px;
         }
         
         .countdown-item {
-            margin: 0 15px;
+            margin: 0 10px;
             text-align: center;
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+        }
+        
+        .countdown-item:hover {
+            transform: rotateY(10deg);
         }
         
         .countdown-number {
-            font-size: 2.5rem;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
             font-weight: 700;
-            color: var(--primary);
-            background-color: white;
-            width: 80px;
-            height: 80px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            width: clamp(60px, 8vw, 80px);
+            height: clamp(60px, 8vw, 80px);
             border-radius: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), 0 0 10px rgba(76, 201, 240, 0.3);
+            border: 1px solid rgba(76, 201, 240, 0.3);
+            position: relative;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.04);
+        }
+        
+        .countdown-number::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 10px;
+            padding: 1px;
+            background: var(--gradient);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
         }
         
         .countdown-label {
@@ -259,27 +422,193 @@
             font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 1px;
+            color: rgba(248, 249, 250, 0.7);
         }
         
+        .newsletter {
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .form-control {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            position: relative;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .form-control input {
+            padding: 15px 20px;
+            width: 100%;
+            border: none;
+            border-radius: 30px;
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.04);
+            color: var(--light);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .form-control input:focus {
+            box-shadow: 0 0 0 2px rgba(76, 201, 240, 0.5);
+            border-color: var(--accent);
+        }
+        
+        .form-control button {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 0 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            bottom: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control button:hover {
+            box-shadow: 0 0 15px rgba(76, 201, 240, 0.5);
+        }
+        
+        footer {
+            background-color: rgba(10, 14, 23, 0.9);
+            color: rgba(248, 249, 250, 0.7);
+            text-align: center;
+            padding: 30px 0;
+            position: relative;
+        }
+        
+        footer a {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+            position: relative;
+        }
+        
+        footer a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 100%;
+            height: 1px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+        
+        footer a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        /* Floating particles */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: rgba(76, 201, 240, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        /* Mobile Responsiveness */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
+            .container {
+                width: 95%;
+                padding: 0 10px;
             }
             
-            .countdown-number {
-                font-size: 1.8rem;
-                width: 60px;
-                height: 60px;
+            .hero {
+                padding: 120px 15px 60px;
+            }
+            
+            .countdown {
+                flex-wrap: wrap;
             }
             
             .countdown-item {
-                margin: 0 10px;
+                margin: 10px;
             }
+            
+            .form-control {
+                width: 90%;
+            }
+            
+            .form-control button {
+                padding: 0 15px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .cta-button {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .plan-box {
+                width: 100%;
+            }
+            
+            .countdown-number {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+            
+            .countdown-label {
+                font-size: 0.8rem;
+            }
+        }
+        
+        /* Animation for feature icons */
+        @keyframes pulse-icon {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Fix for feature icons */
+        .feature-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            margin-right: 10px;
+            border-radius: 50%;
+            background: var(--gradient);
+            color: white;
         }
     </style>
 </head>
 <body>
-    <header>
+    <div class="particles" id="particles"></div>
+    
+    <header id="header">
         <div class="container">
             <div class="logo">Tracker<span>Do</span></div>
         </div>
@@ -287,8 +616,10 @@
     
     <section class="hero">
         <div class="container">
-            <h1>Track, Organize, Deliver</h1>
-            <p>The ultimate productivity solution for individuals and teams to track work, manage projects, and boost productivity.</p>
+            <div class="glitch-wrapper">
+                <h1>Track, Organize, Deliver</h1>
+            </div>
+            <p>The ultimate productivity solution for individuals and teams to track work, manage projects, and boost productivity with futuristic AI capabilities.</p>
             
             <div class="countdown">
                 <div class="countdown-item">
@@ -319,32 +650,32 @@
             
             <div class="features-grid">
                 <div class="feature-box">
-                    <h3>Personal Productivity</h3>
+                    <h3><span class="feature-icon"><i class="fas fa-user"></i></span> Personal Productivity</h3>
                     <p>Track your tasks, set goals, manage your calendar, and get insights into your productivity with our intuitive personal dashboard.</p>
                 </div>
                 
                 <div class="feature-box">
-                    <h3>Team Collaboration</h3>
+                    <h3><span class="feature-icon"><i class="fas fa-users"></i></span> Team Collaboration</h3>
                     <p>Bring your team together, assign tasks, track projects, and ensure everyone stays on the same page with our team management features.</p>
                 </div>
                 
                 <div class="feature-box">
-                    <h3>Rich Insights</h3>
+                    <h3><span class="feature-icon"><i class="fas fa-chart-line"></i></span> Rich Insights</h3>
                     <p>Gain valuable insights with detailed reports and analytics to understand productivity patterns and improve workflow efficiency.</p>
                 </div>
                 
                 <div class="feature-box">
-                    <h3>Smart Integrations</h3>
+                    <h3><span class="feature-icon"><i class="fas fa-plug"></i></span> Smart Integrations</h3>
                     <p>Connect with your favorite tools like Slack, MS Teams, and other task management apps for a seamless workflow experience.</p>
                 </div>
                 
                 <div class="feature-box">
-                    <h3>AI-Powered Search</h3>
+                    <h3><span class="feature-icon"><i class="fas fa-brain"></i></span> AI-Powered Search</h3>
                     <p>Find anything instantly with our advanced vector database search that understands context and relevance.</p>
                 </div>
                 
                 <div class="feature-box">
-                    <h3>Work-Life Balance</h3>
+                    <h3><span class="feature-icon"><i class="fas fa-balance-scale"></i></span> Work-Life Balance</h3>
                     <p>Track work hours, mood, and leave days to maintain a healthy balance between work and personal life.</p>
                 </div>
             </div>
@@ -415,13 +746,108 @@
     
     <footer>
         <div class="container">
-            <p>© 2025 TrackerDo. All rights reserved. Built by <a href="https://technodeon.com" style="color: var(--accent); text-decoration: none;">Technodeon</a></p>
+            <p>© 2025 TrackerDo. All rights reserved. Built by <a href="https://technodeon.com">Technodeon</a></p>
         </div>
     </footer>
     
     <script>
-        // Simple countdown timer
-        const countdownDate = new Date("2025-03-20");
+        // Add Font Awesome fallback
+        function checkFontAwesome() {
+            const span = document.createElement('span');
+            span.className = 'fa';
+            span.style.display = 'none';
+            document.body.insertBefore(span, document.body.firstChild);
+            
+            const isFontAwesomeLoaded = window.getComputedStyle(span).fontFamily.match(/fontawesome/i);
+            document.body.removeChild(span);
+            
+            if (!isFontAwesomeLoaded) {
+                console.log('Font Awesome not loaded. Using alternative icons.');
+                const icons = document.querySelectorAll('.feature-icon i');
+                const iconClasses = {
+                    'fa-user': '👤',
+                    'fa-users': '👥',
+                    'fa-chart-line': '📈',
+                    'fa-plug': '🔌',
+                    'fa-brain': '🧠',
+                    'fa-balance-scale': '⚖️'
+                };
+                
+                icons.forEach(icon => {
+                    for (const [faClass, emoji] of Object.entries(iconClasses)) {
+                        if (icon.classList.contains(faClass)) {
+                            const parent = icon.parentElement;
+                            parent.innerHTML = emoji;
+                            break;
+                        }
+                    }
+                });
+            }
+        }
+        
+        // Particles animation
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            const particleCount = window.innerWidth < 768 ? 30 : 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random position
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                
+                // Random size
+                const size = Math.random() * 4 + 1;
+                
+                // Random opacity
+                const opacity = Math.random() * 0.5 + 0.1;
+                
+                // Set styles
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.opacity = opacity;
+                
+                // Animation
+                const duration = Math.random() * 50 + 30;
+                const delay = Math.random() * 10;
+                
+                particle.style.animation = `floatParticle ${duration}s ${delay}s infinite alternate`;
+                particle.style.animationTimingFunction = 'ease-in-out';
+                
+                particles.appendChild(particle);
+            }
+        }
+        
+        // Add particle animation
+        document.head.insertAdjacentHTML('beforeend', `
+            <style>
+                @keyframes floatParticle {
+                    0% {
+                        transform: translate(0, 0);
+                    }
+                    100% {
+                        transform: translate(${Math.random() > 0.5 ? '' : '-'}${Math.random() * 100 + 50}px, ${Math.random() > 0.5 ? '' : '-'}${Math.random() * 100 + 50}px);
+                    }
+                }
+            </style>
+        `);
+        
+        // Header scroll effect
+        function handleScroll() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }
+        
+        // Countdown timer
+        const countdownDate = new Date();
         countdownDate.setDate(countdownDate.getDate() + 30);
         
         function updateCountdown() {
@@ -434,6 +860,7 @@
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
             
             document.getElementById("days").innerHTML = days;
+             document.getElementById("days").innerHTML = days;
             document.getElementById("hours").innerHTML = hours;
             document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
             document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
