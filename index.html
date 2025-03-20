@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrackerDo - Coming Soon</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .hero {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 30px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .features {
+            padding: 60px 0;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.2rem;
+            color: var(--primary);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-box {
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-box h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .feature-box p {
+            color: #666;
+        }
+        
+        .plans {
+            padding: 60px 0;
+            background-color: #f5f7fa;
+        }
+        
+        .plans-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .plan-box {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            width: 300px;
+            transition: all 0.3s ease;
+        }
+        
+        .plan-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .plan-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .plan-header.free {
+            background-color: var(--accent);
+        }
+        
+        .plan-content {
+            padding: 30px 20px;
+        }
+        
+        .plan-features {
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .plan-features li {
+            padding: 5px 0;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .plan-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .plan-price {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 20px 0;
+            color: var(--dark);
+        }
+        
+        .newsletter {
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .form-control {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .form-control input {
+            padding: 12px 20px;
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 30px 0 0 30px;
+            outline: none;
+        }
+        
+        .form-control button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 25px;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+        }
+        
+        .countdown {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        
+        .countdown-item {
+            margin: 0 15px;
+            text-align: center;
+        }
+        
+        .countdown-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            background-color: white;
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .countdown-label {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .countdown-number {
+                font-size: 1.8rem;
+                width: 60px;
+                height: 60px;
+            }
+            
+            .countdown-item {
+                margin: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">Tracker<span>Do</span></div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>Track, Organize, Deliver</h1>
+            <p>The ultimate productivity solution for individuals and teams to track work, manage projects, and boost productivity.</p>
+            
+            <div class="countdown">
+                <div class="countdown-item">
+                    <div class="countdown-number" id="days">30</div>
+                    <div class="countdown-label">Days</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="hours">24</div>
+                    <div class="countdown-label">Hours</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="minutes">00</div>
+                    <div class="countdown-label">Minutes</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="seconds">00</div>
+                    <div class="countdown-label">Seconds</div>
+                </div>
+            </div>
+            
+            <a href="#newsletter" class="cta-button">Get Early Access</a>
+        </div>
+    </section>
+    
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose TrackerDo?</h2>
+            
+            <div class="features-grid">
+                <div class="feature-box">
+                    <h3>Personal Productivity</h3>
+                    <p>Track your tasks, set goals, manage your calendar, and get insights into your productivity with our intuitive personal dashboard.</p>
+                </div>
+                
+                <div class="feature-box">
+                    <h3>Team Collaboration</h3>
+                    <p>Bring your team together, assign tasks, track projects, and ensure everyone stays on the same page with our team management features.</p>
+                </div>
+                
+                <div class="feature-box">
+                    <h3>Rich Insights</h3>
+                    <p>Gain valuable insights with detailed reports and analytics to understand productivity patterns and improve workflow efficiency.</p>
+                </div>
+                
+                <div class="feature-box">
+                    <h3>Smart Integrations</h3>
+                    <p>Connect with your favorite tools like Slack, MS Teams, and other task management apps for a seamless workflow experience.</p>
+                </div>
+                
+                <div class="feature-box">
+                    <h3>AI-Powered Search</h3>
+                    <p>Find anything instantly with our advanced vector database search that understands context and relevance.</p>
+                </div>
+                
+                <div class="feature-box">
+                    <h3>Work-Life Balance</h3>
+                    <p>Track work hours, mood, and leave days to maintain a healthy balance between work and personal life.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="plans">
+        <div class="container">
+            <h2 class="section-title">Simple Pricing Plans</h2>
+            
+            <div class="plans-container">
+                <div class="plan-box">
+                    <div class="plan-header free">
+                        <h3>Personal</h3>
+                    </div>
+                    <div class="plan-content">
+                        <div class="plan-price">Free</div>
+                        <p>Perfect for individuals looking to boost productivity</p>
+                        <ul class="plan-features">
+                            <li>Personal Calendar</li>
+                            <li>Rich Text Editor</li>
+                            <li>Basic Insights/Reports</li>
+                            <li>Export to Excel/CSV</li>
+                            <li>Work Hour Logging</li>
+                            <li>Daily Mood Tracker</li>
+                        </ul>
+                        <a href="#newsletter" class="cta-button">Get Started</a>
+                    </div>
+                </div>
+                
+                <div class="plan-box">
+                    <div class="plan-header">
+                        <h3>Team</h3>
+                    </div>
+                    <div class="plan-content">
+                        <div class="plan-price">Coming Soon</div>
+                        <p>Designed for teams who want to collaborate effectively</p>
+                        <ul class="plan-features">
+                            <li>Everything in Personal</li>
+                            <li>Project Management</li>
+                            <li>Team Collaboration</li>
+                            <li>Advanced Integrations</li>
+                            <li>Notifications System</li>
+                            <li>Comprehensive Reports</li>
+                            <li>Manager Notes for Evaluation</li>
+                            <li>Vector Search</li>
+                            <li>AI-powered Chatbot</li>
+                            <li>Leave Tracker</li>
+                        </ul>
+                        <a href="#newsletter" class="cta-button">Join Waitlist</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="newsletter" id="newsletter">
+        <div class="container">
+            <h2 class="section-title">Stay Updated</h2>
+            <p>Be the first to know when we launch. Subscribe to our newsletter for early access and exclusive offers.</p>
+            
+            <div class="form-control">
+                <input type="email" placeholder="Your email address">
+                <button>Subscribe</button>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>© 2025 TrackerDo. All rights reserved. Built by <a href="https://technodeon.com" style="color: var(--accent); text-decoration: none;">Technodeon</a></p>
+        </div>
+    </footer>
+    
+    <script>
+        // Simple countdown timer
+        const countdownDate = new Date();
+        countdownDate.setDate(countdownDate.getDate() + 30);
+        
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById("days").innerHTML = days;
+            document.getElementById("hours").innerHTML = hours;
+            document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
